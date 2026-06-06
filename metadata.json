@@ -1,0 +1,6 @@
+{
+  "name": "Hệ thống Quản lý và Tự động Sắp xếp Thời khóa biểu",
+  "description": "Ứng dụng tự động xếp thời khóa biểu tối ưu cho trường tiểu học 15 lớp, 20 giáo viên, tích hợp AI tư vấn giảng dạy và hạn chế xung đột lịch.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
