@@ -100,7 +100,10 @@ export const AiAdvisor: React.FC<AiAdvisorProps> = ({
     // Quick quota audit report
     const quotaAnalysis = classes.map(c => {
       const slots = timetable[c.id] || [];
-      const scheduledCount = slots.filter(s => s.subjectId && s.subjectId !== "CC" && s.subjectId !== "SHL").length;
+      const scheduledCount = slots.filter(s => {
+        const isLockedHDTN = s.subjectId === "HDTN" && ((s.day === 2 && s.period === 1) || (s.day === 6 && s.period === 4));
+        return s.subjectId && !isLockedHDTN;
+      }).length;
       return `${c.name}: ${scheduledCount}/30 tiết`;
     }).join(", ");
 
@@ -109,7 +112,8 @@ export const AiAdvisor: React.FC<AiAdvisorProps> = ({
       let count = 0;
       for (const classId in timetable) {
         timetable[classId].forEach(slot => {
-          if (slot.teacherId === t.id && slot.subjectId && slot.subjectId !== "CC" && slot.subjectId !== "SHL") {
+          const isLockedHDTN = slot.subjectId === "HDTN" && ((slot.day === 2 && slot.period === 1) || (slot.day === 6 && slot.period === 4));
+          if (slot.teacherId === t.id && slot.subjectId && !isLockedHDTN) {
             count++;
           }
         });
