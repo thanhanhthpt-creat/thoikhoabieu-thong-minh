@@ -102,6 +102,19 @@ export default function App() {
     localStorage.setItem("sched_selected_model", selectedModel);
   }, [selectedModel]);
 
+  // --- AUTOMATIC MIGRATION FOR OLD DATA ---
+  useEffect(() => {
+    const hasNewSubjects = subjects.some(s => s.id === "LTOAN");
+    if (!hasNewSubjects) {
+      setSubjects(DEFAULT_SUBJECTS);
+      setClasses(DEFAULT_CLASSES);
+      setTeachers(DEFAULT_TEACHERS);
+      setTimetable(createEmptyTimetable(DEFAULT_CLASSES));
+      setIsToast({ message: "Hệ thống đã tự động cập nhật cấu hình môn học mới nhất.", type: "info" });
+      setTimeout(() => setIsToast(null), 4000);
+    }
+  }, []);
+
   // Establish default selections on mount
   useEffect(() => {
     if (classes.length > 0 && !selectedClassId) {
